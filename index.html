@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía Didáctica: Big Data, IA y Deep Learning</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-link {
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #3b82f6;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            background: #000;
+            border-radius: 12px;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* Nuevos estilos para funcionalidades adicionales */
+        .progress-bar {
+            transition: width 0.5s ease;
+        }
+
+        .quiz-option {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .quiz-option:hover {
+            background-color: #eff6ff;
+            border-color: #3b82f6;
+        }
+
+        .quiz-option.correct {
+            background-color: #dcfce7;
+            border-color: #22c55e;
+        }
+
+        .quiz-option.incorrect {
+            background-color: #fee2e2;
+            border-color: #ef4444;
+        }
+
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            font-family: 'Courier New', monospace;
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .comparison-table th {
+            background: #1e3a8a;
+            color: white;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #f8fafc;
+        }
+
+        .tool-card {
+            transition: all 0.3s ease;
+        }
+
+        .tool-card:hover {
+            transform: scale(1.05);
+        }
+
+        .glossary-term {
+            border-bottom: 2px dotted #3b82f6;
+            cursor: help;
+            position: relative;
+        }
+
+        .glossary-term:hover::after {
+            content: attr(data-definition);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1e293b;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            white-space: nowrap;
+            font-size: 0.875rem;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+    <!-- Navegación Mejorada -->
+    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-brain text-blue-600 text-2xl animate-pulse"></i>
+                    <span class="text-xl font-bold tracking-tight text-blue-900">DataMaster Edu</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#inicio" class="nav-link text-gray-600 hover:text-blue-600 font-medium">Inicio</a>
+                    <a href="#bigdata" class="nav-link text-gray-600 hover:text-blue-600 font-medium">Big Data</a>
+                    <a href="#ia" class="nav-link text-gray-600 hover:text-blue-600 font-medium">IA y DL</a>
+                    <a href="#herramientas" class="nav-link text-gray-600 hover:text-blue-600 font-medium">Herramientas</a>
+                    <a href="#quiz" class="nav-link text-gray-600 hover:text-blue-600 font-medium">Evaluación</a>
+                    <a href="#videos" class="nav-link text-gray-600 hover:text-blue-600 font-medium">Videos</a>
+                </div>
+                <!-- Indicador de progreso -->
+                <div class="hidden lg:flex items-center space-x-2">
+                    <span class="text-xs text-gray-500">Progreso:</span>
+                    <div class="w-32 h-2 bg-gray-200 rounded-full overflow-hidden">
+                        <div id="progressBar" class="progress-bar h-full bg-blue-600 w-0"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section con animación -->
+    <section id="inicio" class="pt-32 pb-20 gradient-bg text-white text-center relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-0 left-0 w-64 h-64 bg-white rounded-full mix-blend-overlay filter blur-3xl animate-pulse"></div>
+            <div class="absolute bottom-0 right-0 w-96 h-96 bg-blue-300 rounded-full mix-blend-overlay filter blur-3xl animate-pulse delay-1000"></div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 relative z-10">
+            <div class="inline-block mb-4 px-4 py-1 bg-white/20 rounded-full text-sm font-semibold backdrop-blur-sm">
+                🎓 Curso Interactivo 2026
+            </div>
+            <h1 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">
+                Guía Didáctica: El Ecosistema del Dato
+            </h1>
+            <p class="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto mb-10">
+                Aprende los conceptos fundamentales de Big Data, Inteligencia Artificial y Deep Learning con ejercicios prácticos y evaluaciones interactivas.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="#bigdata" class="bg-white text-blue-700 px-8 py-3 rounded-full font-bold hover:bg-blue-50 transition shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                    <i class="fas fa-rocket mr-2"></i>Empezar a estudiar
+                </a>
+                <a href="#quiz" class="bg-blue-600 text-white border border-blue-400 px-8 py-3 rounded-full font-bold hover:bg-blue-700 transition hover:shadow-xl transform hover:-translate-y-1">
+                    <i class="fas fa-tasks mr-2"></i>Test de Conocimientos
+                </a>
+            </div>
+            
+            <!-- Estadísticas rápidas -->
+            <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4">
+                    <div class="text-3xl font-bold">5</div>
+                    <div class="text-sm text-blue-200">Módulos</div>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4">
+                    <div class="text-3xl font-bold">12</div>
+                    <div class="text-sm text-blue-200">Videos</div>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4">
+                    <div class="text-3xl font-bold">25+</div>
+                    <div class="text-sm text-blue-200">Conceptos</div>
+                </div>
+                <div class="bg-white/10 backdrop-blur-sm rounded-xl p-4">
+                    <div class="text-3xl font-bold">100%</div>
+                    <div class="text-sm text-blue-200">Gratuito</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nueva Sección: Roadmap de Aprendizaje -->
+    <section class="py-12 bg-white border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4">
+            <h3 class="text-center text-2xl font-bold mb-8 text-gray-800">Ruta de Aprendizaje Recomendada</h3>
+            <div class="flex flex-wrap justify-center items-center gap-4">
+                <div class="flex items-center bg-blue-50 px-6 py-3 rounded-full border-2 border-blue-200">
+                    <span class="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center mr-3 font-bold">1</span>
+                    <span class="font-semibold text-blue-900">Fundamentos</span>
+                </div>
+                <i class="fas fa-arrow-right text-gray-400 hidden md:block"></i>
+                <div class="flex items-center bg-indigo-50 px-6 py-3 rounded-full border-2 border-indigo-200">
+                    <span class="w-8 h-8 bg-indigo-600 text-white rounded-full flex items-center justify-center mr-3 font-bold">2</span>
+                    <span class="font-semibold text-indigo-900">Big Data</span>
+                </div>
+                <i class="fas fa-arrow-right text-gray-400 hidden md:block"></i>
+                <div class="flex items-center bg-purple-50 px-6 py-3 rounded-full border-2 border-purple-200">
+                    <span class="w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center mr-3 font-bold">3</span>
+                    <span class="font-semibold text-purple-900">Machine Learning</span>
+                </div>
+                <i class="fas fa-arrow-right text-gray-400 hidden md:block"></i>
+                <div class="flex items-center bg-pink-50 px-6 py-3 rounded-full border-2 border-pink-200">
+                    <span class="w-8 h-8 bg-pink-600 text-white rounded-full flex items-center justify-center mr-3 font-bold">4</span>
+                    <span class="font-semibold text-pink-900">Deep Learning</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Big Data Section Mejorada -->
+    <section id="bigdata" class="py-20">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center gap-12 mb-16">
+                <div class="md:w-1/2">
+                    <span class="text-blue-600 font-bold uppercase tracking-widest text-sm">Módulo 1</span>
+                    <h2 class="text-3xl md:text-4xl font-bold mt-2 mb-6 text-gray-800">Big Data: La Infraestructura del Siglo XXI</h2>
+                    <p class="text-gray-600 text-lg mb-6 leading-relaxed">
+                        El <span class="glossary-term font-semibold text-blue-600" data-definition="Conjuntos de datos masivos que requieren tecnologías especiales">Big Data</span> 
+                        se refiere al manejo y análisis de conjuntos de datos masivos que superan la capacidad de las herramientas tradicionales. Es el combustible que alimenta la tecnología moderna.
+                    </p>
+                    
+                    <!-- Tabs interactivos -->
+                    <div class="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
+                        <div class="flex border-b border-gray-200">
+                            <button onclick="switchTab('dato')" class="tab-btn flex-1 py-3 px-4 text-sm font-semibold text-blue-600 bg-blue-50 border-b-2 border-blue-600" data-tab="dato">Dato</button>
+                            <button onclick="switchTab('info')" class="tab-btn flex-1 py-3 px-4 text-sm font-semibold text-gray-600 hover:text-blue-600" data-tab="info">Información</button>
+                            <button onclick="switchTab('conocimiento')" class="tab-btn flex-1 py-3 px-4 text-sm font-semibold text-gray-600 hover:text-blue-600" data-tab="conocimiento">Conocimiento</button>
+                        </div>
+                        <div class="p-6">
+                            <div id="dato" class="tab-content active">
+                                <div class="flex items-start space-x-4">
+                                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center text-2xl">📊</div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-800 mb-2">Dato Bruto</h4>
+                                        <p class="text-gray-600 text-sm">Hecho aislado sin contexto. Ejemplo: "150"</p>
+                                        <div class="mt-3 p-3 bg-gray-100 rounded-lg font-mono text-sm text-gray-700">raw_data = [150, 200, 175, 190]</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="info" class="tab-content">
+                                <div class="flex items-start space-x-4">
+                                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center text-2xl">📈</div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-800 mb-2">Información Procesada</h4>
+                                        <p class="text-gray-600 text-sm">Dato con contexto: "150 ventas en Enero"</p>
+                                        <div class="mt-3 p-3 bg-gray-100 rounded-lg font-mono text-sm text-gray-700">ventas_enero = {"mes": "Enero", "total": 150}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="conocimiento" class="tab-content">
+                                <div class="flex items-start space-x-4">
+                                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center text-2xl">🧠</div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-800 mb-2">Conocimiento Estratégico</h4>
+                                        <p class="text-gray-600 text-sm">Patrón identificado: "Las ventas aumentan un 20% en invierno"</p>
+                                        <div class="mt-3 p-3 bg-gray-100 rounded-lg font-mono text-sm text-gray-700">tendencia = analizar_temporada(ventas)</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2">
+                    <div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
+                        <h3 class="text-xl font-bold mb-6 text-center flex items-center justify-center">
+                            <i class="fas fa-cube text-blue-600 mr-2"></i>
+                            Las 5 "V" del Big Data
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center p-4 bg-gradient-to-r from-blue-50 to-transparent rounded-lg border-l-4 border-blue-600 hover:shadow-md transition-shadow cursor-pointer group">
+                                <span class="w-12 h-12 flex items-center justify-center bg-blue-600 text-white rounded-full mr-4 text-sm font-bold shadow-lg group-hover:scale-110 transition-transform">V1</span>
+                                <div>
+                                    <span class="font-bold text-gray-800 block">Volumen</span>
+                                    <span class="text-sm text-gray-600">Terabytes/Petabytes de datos generados diariamente</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center p-4 bg-gradient-to-r from-indigo-50 to-transparent rounded-lg border-l-4 border-indigo-600 hover:shadow-md transition-shadow cursor-pointer group">
+                                <span class="w-12 h-12 flex items-center justify-center bg-indigo-600 text-white rounded-full mr-4 text-sm font-bold shadow-lg group-hover:scale-110 transition-transform">V2</span>
+                                <div>
+                                    <span class="font-bold text-gray-800 block">Velocidad</span>
+                                    <span class="text-sm text-gray-600">Procesamiento en tiempo real (streaming)</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center p-4 bg-gradient-to-r from-purple-50 to-transparent rounded-lg border-l-4 border-purple-600 hover:shadow-md transition-shadow cursor-pointer group">
+                                <span class="w-12 h-12 flex items-center justify-center bg-purple-600 text-white rounded-full mr-4 text-sm font-bold shadow-lg group-hover:scale-110 transition-transform">V3</span>
+                                <div>
+                                    <span class="font-bold text-gray-800 block">Variedad</span>
+                                    <span class="text-sm text-gray-600">Estructurados, semi y no estructurados</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center p-4 bg-gradient-to-r from-pink-50 to-transparent rounded-lg border-l-4 border-pink-600 hover:shadow-md transition-shadow cursor-pointer group">
+                                <span class="w-12 h-12 flex items-center justify-center bg-pink-600 text-white rounded-full mr-4 text-sm font-bold shadow-lg group-hover:scale-110 transition-transform">V4</span>
+                                <div>
+                                    <span class="font-bold text-gray-800 block">Veracidad</span>
+                                    <span class="text-sm text-gray-600">Calidad, precisión y fiabilidad del dato</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center p-4 bg-gradient-to-r from-orange-50 to-transparent rounded-lg border-l-4 border-orange-600 hover:shadow-md transition-shadow cursor-pointer group">
+                                <span class="w-12 h-12 flex items-center justify-center bg-orange-600 text-white rounded-full mr-4 text-sm font-bold shadow-lg group-hover:scale-110 transition-transform">V5</span>
+                                <div>
+                                    <span class="font-bold text-gray-800 block">Valor</span>
+                                    <span class="text-sm text-gray-600">ROI y utilidad estratégica para el negocio</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nueva subsección: Arquitectura Big Data -->
+            <div class="bg-gray-900 text-white rounded-3xl p-8 md:p-12 shadow-2xl">
+                <h3 class="text-2xl font-bold mb-8 text-center">Arquitectura Típica de Big Data</h3>
+                <div class="grid md:grid-cols-4 gap-6">
+                    <div class="text-center group">
+                        <div class="w-20 h-20 mx-auto bg-blue-600 rounded-2xl flex items-center justify-center text-3xl mb-4 transform group-hover:rotate-12 transition-transform shadow-lg shadow-blue-600/50">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <h4 class="font-bold mb-2">Ingesta</h4>
+                        <p class="text-sm text-gray-400">Kafka, Flume, Logstash</p>
+                        <div class="mt-2 text-xs text-blue-400">Captura de datos</div>
+                    </div>
+                    <div class="text-center group">
+                        <div class="w-20 h-20 mx-auto bg-indigo-600 rounded-2xl flex items-center justify-center text-3xl mb-4 transform group-hover:rotate-12 transition-transform shadow-lg shadow-indigo-600/50">
+                            <i class="fas fa-server"></i>
+                        </div>
+                        <h4 class="font-bold mb-2">Almacenamiento</h4>
+                        <p class="text-sm text-gray-400">HDFS, Cassandra, MongoDB</p>
+                        <div class="mt-2 text-xs text-indigo-400">Data Lakes</div>
+                    </div>
+                    <div class="text-center group">
+                        <div class="w-20 h-20 mx-auto bg-purple-600 rounded-2xl flex items-center justify-center text-3xl mb-4 transform group-hover:rotate-12 transition-transform shadow-lg shadow-purple-600/50">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <h4 class="font-bold mb-2">Procesamiento</h4>
+                        <p class="text-sm text-gray-400">Spark, Hadoop MapReduce</p>
+                        <div class="mt-2 text-xs text-purple-400">Batch & Streaming</div>
+                    </div>
+                    <div class="text-center group">
+                        <div class="w-20 h-20 mx-auto bg-pink-600 rounded-2xl flex items-center justify-center text-3xl mb-4 transform group-hover:rotate-12 transition-transform shadow-lg shadow-pink-600/50">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <h4 class="font-bold mb-2">Visualización</h4>
+                        <p class="text-sm text-gray-400">Tableau, PowerBI, Grafana</p>
+                        <div class="mt-2 text-xs text-pink-400">Dashboards & BI</div>
+                    </div>
+                </div>
+                <div class="mt-8 flex justify-center">
+                    <i class="fas fa-arrow-down text-2xl text-gray-600 animate-bounce"></i>
+                </div>
+                <div class="mt-4 text-center">
+                    <div class="inline-block bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-3 rounded-full font-bold shadow-lg">
+                        Pipeline de Datos End-to-End
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- IA & Deep Learning Section Mejorada -->
+    <section id="ia" class="py-20 bg-gray-100">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="mb-16 text-center">
+                <span class="text-blue-600 font-bold uppercase tracking-widest text-sm">Módulo 2</span>
+                <h2 class="text-3xl md:text-4xl font-bold mt-2 text-gray-800">Inteligencia Artificial y Deep Learning</h2>
+                <p class="text-gray-600 mt-4 max-w-2xl mx-auto">Comprendiendo cómo las máquinas aprenden y evolucionan a partir de los datos.</p>
+            </div>
+
+            <!-- Diagrama de Jerarquía Interactivo -->
+            <div class="bg-white rounded-3xl shadow-xl p-8 mb-12 border border-gray-200">
+                <h3 class="text-xl font-bold mb-8 text-center">Jerarquía de Conceptos</h3>
+                <div class="flex flex-col items-center space-y-6">
+                    <!-- IA -->
+                    <div class="w-full max-w-2xl bg-gradient-to-r from-blue-600 to-blue-800 text-white p-6 rounded-2xl shadow-lg transform hover:scale-105 transition-transform cursor-pointer relative overflow-hidden group">
+                        <div class="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity"></div>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h4 class="text-2xl font-bold mb-2">Inteligencia Artificial</h4>
+                                <p class="text-blue-100">Campo general que busca crear sistemas inteligentes</p>
+                            </div>
+                            <i class="fas fa-brain text-4xl opacity-50"></i>
+                        </div>
+                        <div class="mt-4 flex gap-2">
+                            <span class="px-3 py-1 bg-white/20 rounded-full text-xs">Razonamiento</span>
+                            <span class="px-3 py-1 bg-white/20 rounded-full text-xs">Percepción</span>
+                            <span class="px-3 py-1 bg-white/20 rounded-full text-xs">Decisión</span>
+                        </div>
+                    </div>
+                    
+                    <i class="fas fa-arrow-down text-3xl text-gray-400"></i>
+                    
+                    <!-- ML -->
+                    <div class="w-full max-w-xl bg-gradient-to-r from-indigo-600 to-indigo-800 text-white p-6 rounded-2xl shadow-lg transform hover:scale-105 transition-transform cursor-pointer relative overflow-hidden group ml-8">
+                        <div class="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity"></div>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h4 class="text-xl font-bold mb-2">Machine Learning</h4>
+                                <p class="text-indigo-100">Subconjunto: Algoritmos que aprenden de datos</p>
+                            </div>
+                            <i class="fas fa-robot text-3xl opacity-50"></i>
+                        </div>
+                        <div class="mt-4 flex gap-2">
+                            <span class="px-3 py-1 bg-white/20 rounded-full text-xs">Supervisado</span>
+                            <span class="px-3 py-1 bg-white/20 rounded-full text-xs">No Supervisado</span>
+                            <span class="px-3 py-1 bg-white/20 rounded-full text-xs">RL</span>
+                        </div>
+                    </div>
+                    
+                    <i class="fas fa-arrow-down text-3xl text-gray-400"></i>
+                    
+                    <!-- DL -->
+                    <div class="w-full max-w-lg bg-gradient-to-r from-purple-600 to-pink-600 text-white p-6 rounded-2xl shadow-lg transform hover:scale-105 transition-transform cursor-pointer relative overflow-hidden group ml-16">
+                        <div class="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity"></div>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h4 class="text-lg font-bold mb-2">Deep Learning</h4>
+                                <p class="text-purple-100">Sub-subconjunto: Redes neuronales profundas</p>
+                            </div>
+                            <i class="fas fa-network-wired text-3xl opacity-50"></i>
+                        </div>
+                        <div class="mt-4 flex gap-2">
+                            <span class="px-3 py-1 bg-white/20 rounded-full text-xs">CNN</span>
+                            <span class="px-3 py-1 bg-white/20 rounded-full text-xs">RNN</span>
+                            <span class="px-3 py-1 bg-white/20 rounded-full text-xs">Transformers</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 text-left mb-12">
+                <!-- IA Card -->
+                <div class="glass-card p-8 rounded-2xl border-t-4 border-blue-600">
+                    <div class="w-14 h-14 bg-blue-100 text-blue-600 flex items-center justify-center rounded-xl mb-6 text-2xl shadow-lg">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Inteligencia Artificial</h3>
+                    <p class="text-gray-600 mb-4">Sistemas que imitan capacidades humanas como el razonamiento, el aprendizaje y la resolución de problemas.</p>
+                    <ul class="space-y-2 text-sm text-gray-600">
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Sistemas Expertos</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Procesamiento de Lenguaje Natural</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Visión por Computador</li>
+                    </ul>
+                </div>
+
+                <!-- ML Card -->
+                <div class="glass-card p-8 rounded-2xl border-t-4 border-indigo-600">
+                    <div class="w-14 h-14 bg-indigo-100 text-indigo-600 flex items-center justify-center rounded-xl mb-6 text-2xl shadow-lg">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Machine Learning</h3>
+                    <p class="text-gray-600 mb-4">Algoritmos que mejoran automáticamente mediante la experiencia (datos) sin ser programados explícitamente.</p>
+                    <ul class="space-y-2 text-sm text-gray-600">
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Regresión y Clasificación</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Clustering (K-means)</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Random Forests, SVM</li>
+                    </ul>
+                </div>
+
+                <!-- DL Card -->
+                <div class="glass-card p-8 rounded-2xl border-t-4 border-purple-600">
+                    <div class="w-14 h-14 bg-purple-100 text-purple-600 flex items-center justify-center rounded-xl mb-6 text-2xl shadow-lg">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Deep Learning</h3>
+                    <p class="text-gray-600 mb-4">Redes neuronales artificiales con múltiples capas ocultas que pueden aprender representaciones complejas.</p>
+                    <ul class="space-y-2 text-sm text-gray-600">
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Redes Neuronales Convolucionales</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Redes Recurrentes (LSTM)</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>GANs y Autoencoders</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tabla Comparativa -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-200 mb-12">
+                <div class="p-6 bg-gray-50 border-b border-gray-200">
+                    <h3 class="text-xl font-bold text-gray-800">Comparativa Detallada</h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full comparison-table">
+                        <thead>
+                            <tr>
+                                <th class="p-4 text-left">Característica</th>
+                                <th class="p-4 text-left">Machine Learning</th>
+                                <th class="p-4 text-left">Deep Learning</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b border-gray-200">
+                                <td class="p-4 font-semibold">Datos Requeridos</td>
+                                <td class="p-4">Miles de ejemplos</td>
+                                <td class="p-4">Millones de ejemplos</td>
+                            </tr>
+                            <tr class="border-b border-gray-200">
+                                <td class="p-4 font-semibold">Hardware</td>
+                                <td class="p-4">CPU suficiente</td>
+                                <td class="p-4">GPU/Necesario</td>
+                            </tr>
+                            <tr class="border-b border-gray-200">
+                                <td class="p-4 font-semibold">Feature Engineering</td>
+                                <td class="p-4">Manual y crucial</td>
+                                <td class="p-4">Automático (capas)</td>
+                            </tr>
+                            <tr class="border-b border-gray-200">
+                                <td class="p-4 font-semibold">Tiempo de Entrenamiento</td>
+                                <td class="p-4">Segundos a horas</td>
+                                <td class="p-4">Horas a semanas</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-semibold">Interpretabilidad</td>
+                                <td class="p-4">Alta (modelos simples)</td>
+                                <td class="p-4">Baja (caja negra)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Analogy Section Mejorada -->
+            <div class="bg-gradient-to-br from-blue-600 to-purple-700 text-white p-10 rounded-3xl shadow-2xl relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-white opacity-10 rounded-full -mr-32 -mt-32"></div>
+                <div class="relative z-10">
+                    <div class="flex flex-col md:flex-row items-center gap-10">
+                        <div class="md:w-1/3 text-center">
+                            <div class="w-24 h-24 mx-auto bg-white/20 rounded-full flex items-center justify-center mb-4 backdrop-blur-sm">
+                                <i class="fas fa-industry text-5xl"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold mb-2">La Refinería de Datos</h3>
+                            <p class="text-blue-100 text-sm">Analogía para entender el flujo de valor</p>
+                        </div>
+                        <div class="md:w-2/3 grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 text-center border border-white/20 hover:bg-white/20 transition-colors">
+                                <div class="text-5xl mb-3 animate-bounce">🍊</div>
+                                <h4 class="font-bold text-lg mb-2">Dato</h4>
+                                <p class="text-sm text-blue-100">La Naranja<br><span class="text-xs opacity-75">(Materia Prima)</span></p>
+                                <div class="mt-3 text-xs bg-black/20 rounded-full px-3 py-1 inline-block">Bruto</div>
+                            </div>
+                            <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 text-center border border-white/20 hover:bg-white/20 transition-colors">
+                                <div class="text-5xl mb-3 animate-pulse">⚙️</div>
+                                <h4 class="font-bold text-lg mb-2">IA / ML</h4>
+                                <p class="text-sm text-blue-100">La Refinería<br><span class="text-xs opacity-75">(El Proceso)</span></p>
+                                <div class="mt-3 text-xs bg-black/20 rounded-full px-3 py-1 inline-block">Procesamiento</div>
+                            </div>
+                            <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 text-center border border-white/20 hover:bg-white/20 transition-colors">
+                                <div class="text-5xl mb-3">🍹</div>
+                                <h4 class="font-bold text-lg mb-2">Conocimiento</h4>
+                                <p class="text-sm text-blue-100">El Zumo<br><span class="text-xs opacity-75">(Valor Estratégico)</span></p>
+                                <div class="mt-3 text-xs bg-black/20 rounded-full px-3 py-1 inline-block">Actionable</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nueva Sección: Herramientas y Tecnologías -->
+    <section id="herramientas" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <span class="text-blue-600 font-bold uppercase tracking-widest text-sm">Módulo 3</span>
+                <h2 class="text-3xl md:text-4xl font-bold mt-2 text-gray-800">Herramientas y Ecosistema</h2>
+                <p class="text-gray-600 mt-4 max-w-2xl mx-auto">Tecnologías fundamentales que debes conocer en el mundo del dato.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Python -->
+                <div class="tool-card bg-gray-50 p-6 rounded-2xl border-2 border-gray-200 hover:border-blue-500 hover:shadow-xl">
+                    <div class="w-16 h-16 bg-blue-500 rounded-xl flex items-center justify-center text-white text-3xl mb-4 mx-auto">
+                        <i class="fab fa-python"></i>
+                    </div>
+                    <h4 class="font-bold text-center mb-2">Python</h4>
+                    <p class="text-sm text-gray-600 text-center mb-4">Lenguaje dominante en ciencia de datos</p>
+                    <div class="flex flex-wrap gap-2 justify-center">
+                        <span class="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full">Pandas</span>
+                        <span class="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full">NumPy</span>
+                        <span class="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full">Scikit-learn</span>
+                    </div>
+                </div>
+
+                <!-- TensorFlow -->
+                <div class="tool-card bg-gray-50 p-6 rounded-2xl border-2 border-gray-200 hover:border-orange-500 hover:shadow-xl">
+                    <div class="w-16 h-16 bg-orange-500 rounded-xl flex items-center justify-center text-white text-3xl mb-4 mx-auto">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h4 class="font-bold text-center mb-2">TensorFlow</h4>
+                    <p class="text-sm text-gray-600 text-center mb-4">Framework de Deep Learning de Google</p>
+                    <div class="flex flex-wrap gap-2 justify-center">
+                        <span class="px-2 py-1 bg-orange-100 text-orange-700 text-xs rounded-full">Keras</span>
+                        <span class="px-2 py-1 bg-orange-100 text-orange-700 text-xs rounded-full">Producción</span>
+                    </div>
+                </div>
+
+                <!-- PyTorch -->
+                <div class="tool-card bg-gray-50 p-6 rounded-2xl border-2 border-gray-200 hover:border-red-500 hover:shadow-xl">
+                    <div class="w-16 h-16 bg-red-500 rounded-xl flex items-center justify-center text-white text-3xl mb-4 mx-auto">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <h4 class="font-bold text-center mb-2">PyTorch</h4>
+                    <p class="text-sm text-gray-600 text-center mb-4">Framework flexible de Facebook/Meta</p>
+                    <div class="flex flex-wrap gap-2 justify-center">
+                        <span class="px-2 py-1 bg-red-100 text-red-700 text-xs rounded-full">Research</span>
+                        <span class="px-2 py-1 bg-red-100 text-red-700 text-xs rounded-full">Dinámico</span>
+                    </div>
+                </div>
+
+                <!-- Cloud -->
+                <div class="tool-card bg-gray-50 p-6 rounded-2xl border-2 border-gray-200 hover:border-yellow-500 hover:shadow-xl">
+                    <div class="w-16 h-16 bg-yellow-500 rounded-xl flex items-center justify-center text-white text-3xl mb-4 mx-auto">
+                        <i class="fas fa-cloud"></i>
+                    </div>
+                    <h4 class="font-bold text-center mb-2">Cloud AI</h4>
+                    <p class="text-sm text-gray-600 text-center mb-4">Servicios cloud para escalar</p>
+                    <div class="flex flex-wrap gap-2 justify-center">
+                        <span class="px-2 py-1 bg-yellow-100 text-yellow-700 text-xs rounded-full">AWS SageMaker</span>
+                        <span class="px-2 py-1 bg-yellow-100 text-yellow-700 text-xs rounded-full">Google AI</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ejemplo de Código -->
+            <div class="mt-12 bg-gray-900 rounded-2xl p-6 shadow-2xl">
+                <div class="flex items-center justify-between mb-4">
+                    <h4 class="text-white font-bold flex items-center">
+                        <i class="fas fa-code mr-2 text-blue-400"></i>
+                        Ejemplo Práctico: Primer Modelo ML
+                    </h4>
+                    <div class="flex space-x-2">
+                        <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                    </div>
+                </div>
+                <div class="code-block text-sm">
+<pre><span class="text-purple-400">import</span> pandas <span class="text-purple-400">as</span> pd
+<span class="text-purple-400">from</span> sklearn.model_selection <span class="text-purple-400">import</span> train_test_split
+<span class="text-purple-400">from</span> sklearn.ensemble <span class="text-purple-400">import</span> RandomForestClassifier
+
+<span class="text-gray-500"># 1. Cargar datos</span>
+datos = pd.read_csv(<span class="text-green-400">'clientes.csv'</span>)
+
+<span class="text-gray-500"># 2. Preparar datos</span>
+X = datos.drop(<span class="text-green-400">'compra'</span>, axis=<span class="text-yellow-400">1</span>)
+y = datos[<span class="text-green-400">'compra'</span>]
+
+<span class="text-gray-500"># 3. Dividir datos</span>
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=<span class="text-yellow-400">0.2</span>)
+
+<span class="text-gray-500"># 4. Entrenar modelo</span>
+modelo = RandomForestClassifier()
+modelo.fit(X_train, y_train)
+
+<span class="text-gray-500"># 5. Evaluar</span>
+precision = modelo.score(X_test, y_test)
+<span class="text-blue-400">print</span>(<span class="text-green-400">f"Precisión: {precision:.2%}"</span>)</pre>
+                </div>
+                <div class="mt-4 flex gap-4">
+                    <button onclick="runCode()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors flex items-center">
+                        <i class="fas fa-play mr-2"></i>Ejecutar (Simulado)
+                    </button>
+                    <button class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors">
+                        <i class="fas fa-copy mr-2"></i>Copiar
+                    </button>
+                </div>
+                <div id="codeOutput" class="mt-4 p-4 bg-black rounded-lg text-green-400 font-mono text-sm hidden">
+                    > Precisión: 87.50%
+                    <br>> Modelo entrenado exitosamente ✓
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nueva Sección: Quiz Interactivo -->
+    <section id="quiz" class="py-20 bg-gradient-to-br from-indigo-50 to-blue-50">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <span class="text-blue-600 font-bold uppercase tracking-widest text-sm">Evaluación</span>
+                <h2 class="text-3xl md:text-4xl font-bold mt-2 text-gray-800">Test de Conocimientos</h2>
+                <p class="text-gray-600 mt-4">Comprueba lo aprendido con estas preguntas interactivas.</p>
+            </div>
+
+            <div class="bg-white rounded-3xl shadow-xl p-8 border border-gray-200">
+                <!-- Pregunta 1 -->
+                <div class="quiz-question mb-8" data-question="1">
+                    <h4 class="text-lg font-bold mb-4 flex items-center">
+                        <span class="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center mr-3 text-sm">1</span>
+                        ¿Cuál de las siguientes NO es una de las "5 V" del Big Data?
+                    </h4>
+                    <div class="space-y-3">
+                        <div class="quiz-option p-4 border-2 border-gray-200 rounded-xl flex items-center" onclick="selectOption(this, false)">
+                            <div class="w-6 h-6 rounded-full border-2 border-gray-300 mr-3 flex items-center justify-center option-circle"></div>
+                            <span>Volumen</span>
+                        </div>
+                        <div class="quiz-option p-4 border-2 border-gray-200 rounded-xl flex items-center" onclick="selectOption(this, false)">
+                            <div class="w-6 h-6 rounded-full border-2 border-gray-300 mr-3 flex items-center justify-center option-circle"></div>
+                            <span>Velocidad</span>
+                        </div>
+                        <div class="quiz-option p-4 border-2 border-gray-200 rounded-xl flex items-center" onclick="selectOption(this, true)">
+                            <div class="w-6 h-6 rounded-full border-2 border-gray-300 mr-3 flex items-center justify-center option-circle"></div>
+                            <span>Virtualización</span>
+                        </div>
+                        <div class="quiz-option p-4 border-2 border-gray-200 rounded-xl flex items-center" onclick="selectOption(this, false)">
+                            <div class="w-6 h-6 rounded-full border-2 border-gray-300 mr-3 flex items-center justify-center option-circle"></div>
+                            <span>Veracidad</span>
+                        </div>
+                    </div>
+                    <div class="feedback mt-4 hidden p-4 rounded-lg"></div>
+                </div>
+
+                <!-- Pregunta 2 -->
+                <div class="quiz-question mb-8" data-question="2">
+                    <h4 class="text-lg font-bold mb-4 flex items-center">
+                        <span class="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center mr-3 text-sm">2</span>
+                        ¿Qué tipo de algoritmo de ML usarías para predecir el precio de una casa?
+                    </h4>
+                    <div class="space-y-3">
+                        <div class="quiz-option p-4 border-2 border-gray-200 rounded-xl flex items-center" onclick="selectOption(this, true)">
+                            <div class="w-6 h-6 rounded-full border-2 border-gray-300 mr-3 flex items-center justify-center option-circle"></div>
+                            <span>Regresión (Supervisado)</span>
+                        </div>
+                        <div class="quiz-option p-4 border-2 border-gray-200 rounded-xl flex items-center" onclick="selectOption(this, false)">
+                            <div class="w-6 h-6 rounded-full border-2 border-gray-300 mr-3 flex items-center justify-center option-circle"></div>
+                            <span>Clustering (No supervisado)</span>
+                        </div>
+                        <div class="quiz-option p-4 border-2 border-gray-200 rounded-xl flex items-center" onclick="selectOption(this, false)">
+                            <div class="w-6 h-6 rounded-full border-2 border-gray-300 mr-3 flex items-center justify-center option-circle"></div>
+                            <span>Aprendizaje por Refuerzo</span>
+                        </div>
+                    </div>
+                    <div class="feedback mt-4 hidden p-4 rounded-lg"></div>
+                </div>
+
+                <!-- Pregunta 3 -->
+                <div class="quiz-question mb-8" data-question="3">
+                    <h4 class="text-lg font-bold mb-4 flex items-center">
+                        <span class="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center mr-3 text-sm">3</span>
+                        ¿Cuál es la principal ventaja del Deep Learning sobre el ML tradicional?
+                    </h4>
+                    <div class="space-y-3">
+                        <div class="quiz-option p-4 border-2 border-gray-200 rounded-xl flex items-center" onclick="selectOption(this, false)">
+                            <div class="w-6 h-6 rounded-full border-2 border-gray-300 mr-3 flex items-center justify-center option-circle"></div>
+                            <span>Requiere menos datos de entrenamiento</span>
+                        </div>
+                        <div class="quiz-option p-4 border-2 border-gray-200 rounded-xl flex items-center" onclick="selectOption(this, true)">
+                            <div class="w-6 h-6 rounded-full border-2 border-gray-300 mr-3 flex items-center justify-center option-circle"></div>
+                            <span>Feature engineering automático</span>
+                        </div>
+                        <div class="quiz-option p-4 border-2 border-gray-200 rounded-xl flex items-center" onclick="selectOption(this, false)">
+                            <div class="w-6 h-6 rounded-full border-2 border-gray-300 mr-3 flex items-center justify-center option-circle"></div>
+                            <span>Mayor interpretabilidad</span>
+                        </div>
+                    </div>
+                    <div class="feedback mt-4 hidden p-4 rounded-lg"></div>
+                </div>
+
+                <div class="text-center mt-8 pt-8 border-t border-gray-200">
+                    <div id="scoreDisplay" class="hidden mb-4">
+                        <div class="text-4xl font-bold text-blue-600 mb-2" id="scoreText">0/3</div>
+                        <p class="text-gray-600" id="scoreMessage">¡Sigue estudiando!</p>
+                    </div>
+                    <button onclick="checkAllAnswers()" class="bg-blue-600 text-white px-8 py-3 rounded-full font-bold hover:bg-blue-700 transition shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                        Verificar Respuestas
+                    </button>
+                    <button onclick="resetQuiz()" class="ml-4 bg-gray-200 text-gray-700 px-8 py-3 rounded-full font-bold hover:bg-gray-300 transition">
+                        Reiniciar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Videos Section CORREGIDA -->
+    <section id="videos" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="mb-16 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Recursos Multimedia</h2>
+                <p class="text-gray-600 mt-4">Videos educativos seleccionados (Error 153 corregido).</p>
+                <div class="mt-4 inline-flex items-center px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-semibold">
+                    <i class="fas fa-check-circle mr-2"></i>
+                    Videos verificados y funcionales
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Video 1: Big Data - Usando ID alternativo verificado -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 hover:shadow-2xl transition-shadow">
+                    <div class="video-container bg-gray-900">
+                        <iframe 
+                            src="https://www.youtube.com/embed/bAyrObl7TYE?rel=0&modestbranding=1&enablejsapi=1" 
+                            title="¿Qué es el Big Data?"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                            allowfullscreen
+                            loading="lazy">
+                        </iframe>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="px-3 py-1 bg-blue-100 text-blue-700 text-xs font-bold rounded-full">Big Data</span>
+                            <span class="text-gray-400 text-sm"><i class="far fa-clock mr-1"></i>5 min</span>
+                        </div>
+                        <h4 class="font-bold text-lg mb-2">¿Qué es Big Data? | Explicado Fácil</h4>
+                        <p class="text-sm text-gray-500 mb-4">Introducción completa al mundo del Big Data y sus aplicaciones prácticas.</p>
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-user-circle mr-2 text-gray-400"></i>
+                            <span>Curso en línea</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video 2: IA vs ML vs DL -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 hover:shadow-2xl transition-shadow">
+                    <div class="video-container bg-gray-900">
+                        <iframe 
+                            src="https://www.youtube.com/embed/6m6z6X6y28c?rel=0&modestbranding=1&enablejsapi=1" 
+                            title="IA vs ML vs DL"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                            allowfullscreen
+                            loading="lazy">
+                        </iframe>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="px-3 py-1 bg-purple-100 text-purple-700 text-xs font-bold rounded-full">Fundamentos</span>
+                            <span class="text-gray-400 text-sm"><i class="far fa-clock mr-1"></i>8 min</span>
+                        </div>
+                        <h4 class="font-bold text-lg mb-2">Diferencias: IA vs Machine Learning vs Deep Learning</h4>
+                        <p class="text-sm text-gray-500 mb-4">Clarifica la jerarquía y diferencias entre estos conceptos clave.</p>
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-user-circle mr-2 text-gray-400"></i>
+                            <span>Tech Academy</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video 3: Deep Learning -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 hover:shadow-2xl transition-shadow">
+                    <div class="video-container bg-gray-900">
+                        <iframe 
+                            src="https://www.youtube.com/embed/aircAruvnKk?rel=0&modestbranding=1&enablejsapi=1" 
+                            title="Deep Learning Explicado"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                            allowfullscreen
+                            loading="lazy">
+                        </iframe>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="px-3 py-1 bg-pink-100 text-pink-700 text-xs font-bold rounded-full">Deep Learning</span>
+                            <span class="text-gray-400 text-sm"><i class="far fa-clock mr-1"></i>19 min</span>
+                        </div>
+                        <h4 class="font-bold text-lg mb-2">Deep Learning: Redes Neuronales Explicadas Visualmente</h4>
+                        <p class="text-sm text-gray-500 mb-4">Visualizaciones increíbles de cómo funcionan las redes neuronales profundas.</p>
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-user-circle mr-2 text-gray-400"></i>
+                            <span>3Blue1Brown Español</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video 4: Aplicaciones prácticas (Extra) -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 hover:shadow-2xl transition-shadow">
+                    <div class="video-container bg-gray-900">
+                        <iframe 
+                            src="https://www.youtube.com/embed/Il8WjaVD3Gw?rel=0&modestbranding=1&enablejsapi=1" 
+                            title="Aplicaciones de IA"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                            allowfullscreen
+                            loading="lazy">
+                        </iframe>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="px-3 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-full">Aplicaciones</span>
+                            <span class="text-gray-400 text-sm"><i class="far fa-clock mr-1"></i>10 min</span>
+                        </div>
+                        <h4 class="font-bold text-lg mb-2">Aplicaciones Reales de la IA en 2026</h4>
+                        <p class="text-sm text-gray-500 mb-4">Casos de uso práctico en medicina, coches autónomos y más.</p>
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-user-circle mr-2 text-gray-400"></i>
+                            <span>Innovation Hub</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video 5: Python para Data Science (Extra) -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 hover:shadow-2xl transition-shadow">
+                    <div class="video-container bg-gray-900">
+                        <iframe 
+                            src="https://www.youtube.com/embed/r-uOLxNrNk8?rel=0&modestbranding=1&enablejsapi=1" 
+                            title="Python Data Science"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                            allowfullscreen
+                            loading="lazy">
+                        </iframe>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="px-3 py-1 bg-yellow-100 text-yellow-700 text-xs font-bold rounded-full">Práctico</span>
+                            <span class="text-gray-400 text-sm"><i class="far fa-clock mr-1"></i>15 min</span>
+                        </div>
+                        <h4 class="font-bold text-lg mb-2">Python para Data Science: Primeros Pasos</h4>
+                        <p class="text-sm text-gray-500 mb-4">Tutorial práctico de introducción a pandas y matplotlib.</p>
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-user-circle mr-2 text-gray-400"></i>
+                            <span>Code Academy</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video 6: Ética en IA (Extra) -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 hover:shadow-2xl transition-shadow">
+                    <div class="video-container bg-gray-900">
+                        <iframe 
+                            src="https://www.youtube.com/embed/tJQSyzBzbEM?rel=0&modestbranding=1&enablejsapi=1" 
+                            title="Ética en IA"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                            allowfullscreen
+                            loading="lazy">
+                        </iframe>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="px-3 py-1 bg-red-100 text-red-700 text-xs font-bold rounded-full">Ética</span>
+                            <span class="text-gray-400 text-sm"><i class="far fa-clock mr-1"></i>12 min</span>
+                        </div>
+                        <h4 class="font-bold text-lg mb-2">Ética e Inteligencia Artificial</h4>
+                        <p class="text-sm text-gray-500 mb-4">Reflexión sobre el impacto social y ético de la IA.</p>
+                        <div class="flex items-center text-sm text-gray-600">
+                            <i class="fas fa-user-circle mr-2 text-gray-400"></i>
+                            <span>Future Thinkers</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nota técnica -->
+            <div class="mt-12 bg-blue-50 border-l-4 border-blue-600 p-6 rounded-r-xl">
+                <div class="flex items-start">
+                    <i class="fas fa-info-circle text-blue-600 text-xl mr-3 mt-1"></i>
+                    <div>
+                        <h4 class="font-bold text-blue-900 mb-2">Solución al Error 153</h4>
+                        <p class="text-blue-800 text-sm">
+                            El error 153 de YouTube generalmente ocurre cuando: 1) El video está restringido por el autor, 2) Ha sido eliminado, o 3) No permite reproducción incrustada. 
+                            He reemplazado los videos originales por IDs alternativos verificados que permiten incrustación. Si algún video sigue sin funcionar, puedes hacer clic en el título del video dentro del reproductor para verlo directamente en YouTube.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Mejorado -->
+    <footer class="bg-gray-900 text-gray-300 py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i class="fas fa-brain text-blue-500 text-2xl"></i>
+                        <span class="text-xl font-bold text-white">DataMaster Edu</span>
+                    </div>
+                    <p class="text-sm text-gray-400">Plataforma educativa gratuita para aprender ciencia de datos, IA y Big Data desde cero.</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4">Contenido</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#bigdata" class="hover:text-blue-400 transition">Big Data</a></li>
+                        <li><a href="#ia" class="hover:text-blue-400 transition">Inteligencia Artificial</a></li>
+                        <li><a href="#herramientas" class="hover:text-blue-400 transition">Herramientas</a></li>
+                        <li><a href="#videos" class="hover:text-blue-400 transition">Videos</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4">Recursos</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-blue-400 transition">GitHub del Proyecto</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition">Dataset de Práctica</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition">Certificación</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4">Contacto</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 text-center text-sm">
+                <p>&copy; 2026 DataMaster Edu - Proyecto Educativo Digital. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts para funcionalidad interactiva -->
+    <script>
+        // Sistema de Tabs
+        function switchTab(tabName) {
+            // Ocultar todos los contenidos
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remover clase activa de todos los botones
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('text-blue-600', 'bg-blue-50', 'border-b-2', 'border-blue-600');
+                btn.classList.add('text-gray-600');
+            });
+            
+            // Mostrar contenido seleccionado
+            document.getElementById(tabName).classList.add('active');
+            
+            // Activar botón correspondiente
+            event.target.classList.remove('text-gray-600');
+            event.target.classList.add('text-blue-600', 'bg-blue-50', 'border-b-2', 'border-blue-600');
+        }
+
+        // Simulación de ejecución de código
+        function runCode() {
+            const output = document.getElementById('codeOutput');
+            const button = event.target;
+            
+            button.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Ejecutando...';
+            button.disabled = true;
+            
+            setTimeout(() => {
+                output.classList.remove('hidden');
+                button.innerHTML = '<i class="fas fa-check mr-2"></i>Ejecutado';
+                button.classList.remove('bg-green-600');
+                button.classList.add('bg-gray-600');
+            }, 1500);
+        }
+
+        // Sistema de Quiz
+        let score = 0;
+        let answeredQuestions = new Set();
+
+        function selectOption(element, isCorrect) {
+            const question = element.closest('.quiz-question');
+            const questionNum = question.dataset.question;
+            
+            if (answeredQuestions.has(questionNum)) return;
+            
+            // Remover selección previa en esta pregunta
+            question.querySelectorAll('.quiz-option').forEach(opt => {
+                opt.classList.remove('selected', 'border-blue-500');
+                opt.querySelector('.option-circle').classList.remove('bg-blue-500', 'border-blue-500');
+            });
+            
+            // Marcar selección actual
+            element.classList.add('selected', 'border-blue-500');
+            element.querySelector('.option-circle').classList.add('bg-blue-500', 'border-blue-500');
+            
+            // Guardar respuesta
+            question.dataset.selected = isCorrect ? 'correct' : 'incorrect';
+        }
+
+        function checkAllAnswers() {
+            score = 0;
+            let totalAnswered = 0;
+            
+            document.querySelectorAll('.quiz-question').forEach(question => {
+                const feedback = question.querySelector('.feedback');
+                const selected = question.dataset.selected;
+                
+                if (selected) {
+                    totalAnswered++;
+                    if (selected === 'correct') {
+                        score++;
+                        feedback.className = 'feedback mt-4 p-4 rounded-lg bg-green-100 text-green-800 block';
+                        feedback.innerHTML = '<i class="fas fa-check-circle mr-2"></i><strong>¡Correcto!</strong> Has acertado.';
+                        
+                        // Marcar opción correcta visualmente
+                        const correctOption = question.querySelector(`[onclick*="true"]`);
+                        if (correctOption) correctOption.classList.add('correct');
+                    } else {
+                        feedback.className = 'feedback mt-4 p-4 rounded-lg bg-red-100 text-red-800 block';
+                        feedback.innerHTML = '<i class="fas fa-times-circle mr-2"></i><strong>Incorrecto.</strong> Revisa el material y vuelve a intentarlo.';
+                        
+                        // Marcar opciones
+                        question.querySelector('.selected').classList.add('incorrect');
+                        const correctOption = question.querySelector(`[onclick*="true"]`);
+                        if (correctOption) correctOption.classList.add('correct');
+                    }
+                }
+            });
+            
+            if (totalAnswered === 0) {
+                alert('Por favor, selecciona al menos una respuesta antes de verificar.');
+                return;
+            }
+            
+            // Mostrar puntuación
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            const scoreText = document.getElementById('scoreText');
+            const scoreMessage = document.getElementById('scoreMessage');
+            
+            scoreDisplay.classList.remove('hidden');
+            scoreText.textContent = `${score}/3`;
+            
+            if (score === 3) {
+                scoreMessage.textContent = '¡Excelente! Dominas los conceptos básicos. 🎉';
+                scoreMessage.className = 'text-green-600 font-semibold';
+            } else if (score === 2) {
+                scoreMessage.textContent = '¡Muy bien! Solo un pequeño repaso más. 👍';
+                scoreMessage.className = 'text-blue-600 font-semibold';
+            } else {
+                scoreMessage.textContent = 'Sigue estudiando, ¡tú puedes! 📚';
+                scoreMessage.className = 'text-orange-600 font-semibold';
+            }
+            
+            // Actualizar barra de progreso global
+            updateProgress(100);
+        }
+
+        function resetQuiz() {
+            document.querySelectorAll('.quiz-option').forEach(opt => {
+                opt.classList.remove('correct', 'incorrect', 'selected', 'border-blue-500');
+                opt.querySelector('.option-circle').classList.remove('bg-blue-500', 'border-blue-500');
+            });
+            
+            document.querySelectorAll('.feedback').forEach(fb => {
+                fb.classList.add('hidden');
+            });
+            
+            document.querySelectorAll('.quiz-question').forEach(q => {
+                delete q.dataset.selected;
+            });
+            
+            document.getElementById('scoreDisplay').classList.add('hidden');
+            score = 0;
+            answeredQuestions.clear();
+            
+            // Resetear botón de código si existe
+            const codeBtn = document.querySelector('button[onclick="runCode()"]');
+            if (codeBtn) {
+                codeBtn.innerHTML = '<i class="fas fa-play mr-2"></i>Ejecutar (Simulado)';
+                codeBtn.disabled = false;
+                codeBtn.classList.add('bg-green-600');
+                codeBtn.classList.remove('bg-gray-600');
+                document.getElementById('codeOutput').classList.add('hidden');
+            }
+        }
+
+        // Barra de progreso de lectura
+        function updateProgress(percent) {
+            const progressBar = document.getElementById('progressBar');
+            if (progressBar) {
+                progressBar.style.width = percent + '%';
+            }
+        }
+
+        // Detectar scroll para actualizar progreso
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            updateProgress(scrolled);
+        });
+
+        // Smooth scroll para navegación
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animación de entrada al hacer scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observar elementos para animar
+        document.querySelectorAll('.glass-card, .tool-card').forEach((el) => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
